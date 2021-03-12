@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  background: white;
+}
+
+:root {
+  --primary-color: white;
+  --secondary-color: black;
+  --obtacles-width: 64px;
+  --anim-duration: 2s;
+  --canvas-height: 620px;
+  --chracter-size: 40px;
+  --hole-height: 200px;
+}
+
+#canvas {
+  width: auto;
+  height: var(--canvas-height);
+}
+
+#canvas #block {
+  width: var(--obtacles-width);
+  height: 620px;
+  background-color: var(--secondary-color);
+  position: absolute;
+  left: 400px;
+}
+
+#canvas #hole {
+  width: var(--obtacles-width);
+  height: 200px;
+  background-color: white;
+  position: absolute;
+  left: 400px;
+  top: calc(var(--canvas-height) / 2 - calc(var(--hole-height) / 2));
+}
+
+#canvas #character {
+  margin-left: 100px;
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  position: absolute;
+  top: calc((var(--canvas-height) / 2) - calc(var(--chracter-size) / 2));
+  border-radius: 50%;
+}
+
+.status-board .score {
+  font-family: "Poppins";
+  font-weight: bold;
+  width: 240px;
+  display: inline-block;
+  margin: 1.5em;
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.debug {
+  font-family: "Poppins";
+  color: red;
+  margin: 8px;
+  font-size: 1.2em;
+  left: 0;
+  bottom: 0%;
+  background: none;
+  z-index: 999;
+  position: absolute;
+}
+
+.debug h6 {
+  padding: 2px;
+  display: block;
+  background: whitesmoke;
+}
+
+@-webkit-keyframes blocks {
+  0% {
+    left: 100vw;
+  }
+  100% {
+    left: -64px;
+  }
+}
+
+@keyframes blocks {
+  0% {
+    left: 100vw;
+  }
+  100% {
+    left: -64px;
+  }
+}
+/*# sourceMappingURL=main.css.map */
