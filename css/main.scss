@@ -26,7 +26,7 @@
     background-color: var(--secondary-color);
     position: absolute;
     left: 400px;
-    // animation: blocks 1s infinite linear;
+    animation: blocks 2s infinite linear;
   }
 
   #hole {
@@ -36,11 +36,11 @@
     position: absolute;
     left: 400px;
     top: calc(var(--canvas-height) / 2 - calc(var(--hole-height) / 2));
-    // animation: blocks 1s infinite linear;
+    animation: blocks 2s infinite linear;
   }
 
   #character {
-    margin-left: 100px;
+    margin: 10px;
     width: 40px;
     height: 40px;
     background-color: black;
@@ -79,7 +79,49 @@
   }
 }
 
-@keyframes blocks{
+#option-gameover {
+  display: none;
+  z-index: 99;
+  height: 200px;
+  position: relative;
+  width: 400px;
+  top: 50%;
+  margin: auto;
+  border: 4px solid black;
+  border-radius: 16px;
+  font-family: "Poppins";
+
+  h4 {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 16px;
+    color: red;
+  }
+
+  h5 {
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+  #try-again {
+    border: 2px solid black;
+    font-size: 1.1em;
+    text-align: center;
+    height: fit-content;
+    margin: 0 auto;
+    margin-top: 32px;
+    cursor: pointer;
+    width: fit-content;
+    padding: 8px;
+
+    &:hover{
+      background-color: black;
+      color: white;
+    }
+  }
+}
+
+@keyframes blocks {
   0% {
     left: 100vw;
   }

@@ -2,41 +2,44 @@ const block = document.getElementById("block");
 const hole = document.getElementById("hole");
 const character = document.getElementById("character");
 const scoreBoard = document.getElementById("score-display")
+const opt_gameover = document.getElementById("option-gameover");
 const intervalTimeOutMS = 1;
 const jumpAcceleration = 10;
-
-const animOpt = {
-    duration: 2000,
-    iterations: Infinity,
-    easing: "linear"
-}
-
-const animKeyFrame = [{ left: "100vw" }, { left: "-64px" }]
 
 var isJumping = false
 var iterationCount = 0
 var scoreCounter = 0
+var isGameOver = false
 
-function obstaclesAnim(newAnimaKeyFrame = animKeyFrame, newAnimOption = animOpt) {
-    block.animate(animKeyFrame, animOpt);
-    hole.animate(animKeyFrame, animOpt)
+function updateScore() {
+    scoreCounter++
+    scoreBoard.textContent = "Score: " + scoreCounter
+
 }
 
 function holeSizeGenerator() {
     iterationCount++;
     var randomTop = parseInt((Math.random() * 300));
-    var animSpeedFactor = (iterationCount * 1000) + 2000
-
-    const newAnimOpt = {
-        duration: animSpeedFactor,
-        iterations: Infinity,
-        easing: "linear"
-    }
-
     hole.style.top = randomTop + "px";
-    // obstaclesAnim(animKeyFrame, newAnimOpt)
-    displayLog(animSpeedFactor, 2)
+    updateScore()
+}
 
+function stopAnimation() {
+    hole.style.animationPlayState = "paused"
+    block.style.animationPlayState = "paused"
+}
+
+
+
+function showGameOverOption() {
+    isGameOver = true
+    opt_gameover.style.display = "block"
+    document.getElementById("final-score").textContent = "Final Score: " + scoreCounter
+    document.getElementById("try-again").addEventListener("click", () => {
+        opt_gameover.style.display = "none"
+        location.reload()
+        displayLog("CLICKED!", 4)
+    })
 }
 
 
@@ -69,27 +72,35 @@ function hitDetector() {
     var characterRightPos = characerDimen['marginLeft']
         + characerDimen['width']
         + characerDimen['left']
+    var holeRightPos = holeDimen['left'] + holeDimen['width']
+    var blockRightPos = blocksDimen['left'] + blocksDimen['width']
 
-    const isCharacterInHole = (characterRightPos >= holeDimen['left']
-        && characterRightPos <= (holeDimen['left'] + holeDimen['width']))
+    const isCharacterInHole =
+        characterRightPos >= holeDimen['left']
+        && characerDimen["left"] <= holeRightPos
         && characerDimen["top"] > holeDimen["top"]
         && characterBotPos < holeBotPos
 
-    const isCharcterHitObstacles = blocksDimen['left'] <= (characerDimen["width"] + characerDimen["marginLeft"])
+    const isCharcterHitObstacles =
+        blocksDimen['left'] <= characterRightPos
         || characerDimen['top'] <= 0
         || (characerDimen['top'] + characerDimen['height']) >= (blocksDimen['height'] + blocksDimen['top'])
 
-    if (isCharacterInHole && isCharcterHitObstacles) {
-        scoreCounter++
-        scoreBoard.textContent = "Score: " + scoreCounter
+    if (!isCharacterInHole && isCharcterHitObstacles) {
+        stopAnimation()
+        showGameOverOption()
     }
 
+    displayLog("Character Bot Pos " + (characerDimen['top'] + characerDimen['height']), 2)
+    displayLog("Hole Bot Pos " + (blocksDimen['height'] + blocksDimen['top']), 3)
     displayLog("In Hole: " + isCharacterInHole, 0)
     displayLog("Hit Block: " + isCharcterHitObstacles, 1)
+    displayLog(" blocksDimen['left']: " + blocksDimen['left'], 4)
+    displayLog(" character right : " + characterRightPos, 5)
 }
 
 function gravity() {
-    const gravityAcceleration = 5;
+    const gravityAcceleration = 3;
 
     var objTopPos = parseInt(
         window.getComputedStyle(character)
@@ -123,13 +134,18 @@ function jump() {
 }
 
 document.body.onkeyup = (e) => {
-    if (e.keyCode == 32) {
+    if (e.keyCode == 32 && !isGameOver) {
+        jump()
+    }
+}
+
+document.body.onclick = (e) => {
+    if (!isGameOver) {
         jump()
     }
 }
 
 
-obstaclesAnim()
 block.addEventListener("animationiteration", holeSizeGenerator)
 setInterval(gravity, intervalTimeOutMS)
 
