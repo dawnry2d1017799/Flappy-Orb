@@ -10,7 +10,8 @@ var isJumping = false
 var iterationCount = 0
 var scoreCounter = 0
 var isGameOver = false
-
+var isReloading = false
+const degbugEnable = false 
 function updateScore() {
     scoreCounter++
     scoreBoard.textContent = "Score: " + scoreCounter
@@ -27,6 +28,7 @@ function holeSizeGenerator() {
 function stopAnimation() {
     hole.style.animationPlayState = "paused"
     block.style.animationPlayState = "paused"
+    reloading = false
 }
 
 
@@ -37,7 +39,12 @@ function showGameOverOption() {
     document.getElementById("final-score").textContent = "Final Score: " + scoreCounter
     document.getElementById("try-again").addEventListener("click", () => {
         opt_gameover.style.display = "none"
-        location.reload()
+        
+        if(!reloading){
+            location.reload()
+            reloading = true
+        }
+
         displayLog("CLICKED!", 4)
     })
 }
@@ -152,6 +159,7 @@ setInterval(gravity, intervalTimeOutMS)
 
 //Debug
 function displayLog(logMsg, logNumber) {
+  if(degbugEnable){
     var logs = []
 
     for (i = 1; i <= 6; i++) {
@@ -159,4 +167,5 @@ function displayLog(logMsg, logNumber) {
     }
 
     logs[logNumber].textContent = logMsg
+  }
 }

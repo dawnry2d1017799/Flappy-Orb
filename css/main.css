@@ -142,4 +142,8 @@
     left: -64px;
   }
 }
+
+.debug {
+  display: none;
+}
 /*# sourceMappingURL=main.css.map */
