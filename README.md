@@ -1,4 +1,1 @@
-# Flappy-Orb
-This is just a school website project. 
-This repository contains all the project activities from "Html" base game to personal website and other stuff.
-
+This project serves as my academic and also for my personal study purposes, like doing some experiments out of my imagination. This project contains 2d simulation and other stuffs that can be created with the power of HTML, CSS and Javascript languages. 
